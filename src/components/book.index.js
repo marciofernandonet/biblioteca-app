@@ -52,7 +52,7 @@ export default class Index extends Component {
                     <td>{ object.autor }</td>
                     <td>{ object.ano }</td>
                     <td>
-                        <button className="btn btn-outline-primary btn-rounded waves-effect btn-sm"><Link to={"/admin/editar/"+object._id}>Editar</Link></button>
+                        <Link to={"/admin/editar/"+object._id}>Editar</Link>
                     </td>
                     <td>      
                         <button className="btn btn-outline-primary btn-rounded waves-effect btn-sm" value={object._id} onClick={this.delete} >Deletar</button>
