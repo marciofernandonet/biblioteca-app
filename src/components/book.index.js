@@ -9,7 +9,9 @@ import {
     MDBCardBody, 
     MDBTable, 
     MDBTableBody, 
-    MDBTableHead
+    MDBTableHead,
+    MDBBtn,
+    MDBIcon
 }from "mdbreact";
 
 export default class Index extends Component {
@@ -33,10 +35,10 @@ export default class Index extends Component {
         });
     }
 
-    delete = event => {
+    delete = (id) => {
         let confirm = window.confirm('Confirmar?');
         if(confirm){
-            api.delete('/livros/'+event.target.value)
+            api.delete(`/livros/${id}`)
                 .then(res=>{
                     this.loadBooks();
                 })
@@ -51,11 +53,15 @@ export default class Index extends Component {
                     <td>{ object.titulo }</td>
                     <td>{ object.autor }</td>
                     <td>{ object.ano }</td>
-                    <td>
-                        <Link to={"/admin/editar/"+object._id}>Editar</Link>
+                    <td>            
+                        <Link tag="a" className="nav-link Ripple-parent btn btn-outline-mdb-color btn-sm d-inline"  to={"/admin/editar/"+object._id}>
+                            edit <MDBIcon icon="edit" className="mr-1" />
+                        </Link>
                     </td>
                     <td>      
-                        <button className="btn btn-outline-primary btn-rounded waves-effect btn-sm" value={object._id} onClick={this.delete} >Deletar</button>
+                        <MDBBtn tag="a" outline size="sm" color="deep-orange" onClick={()=>{this.delete(object._id)}} >
+                            del <MDBIcon icon="trash-alt" className="mr-1" />
+                        </MDBBtn>
                     </td>
                 </tr>
             );
