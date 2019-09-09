@@ -8,7 +8,7 @@ const NotFound = () => (
                 Página não encontrada
             </h2>
             <p style={{textAlign:"center"}}>
-                <Link to="/">Ir para a página inicial</Link>
+                <Link to="/">Voltar para a página inicial</Link>
             </p>
             
         </section>
