@@ -17,6 +17,8 @@ import {
     MDBModalFooter,
     MDBInputGroup
 } from "mdbreact";
+import { NotificationContainer, NotificationManager } from 'react-notifications';
+import 'react-notifications/lib/notifications.css'; 
 
 export default class Index extends Component {
 
@@ -44,14 +46,6 @@ export default class Index extends Component {
         });
     }
 
-    eModal = (id, title) => () => {
-        this.setState({ 
-            modal: !this.state.modal,
-            book_id: id,
-            book_title: title 
-        });
-    }
-
     listBooks = () => {
         return this.state.book.map((object, i)=>{
             return (
@@ -67,18 +61,48 @@ export default class Index extends Component {
         });
     }
 
+    eModal = (id, title) => () => {
+        console.log(id);
+        console.log(title);
+        this.setState({ 
+            modal: !this.state.modal,
+            book_id: id,
+            book_title: title 
+        });
+    }
+
+    addNote = () =>
+    {
+        let selNote = this.refs.note.value;
+        if(!selNote){
+            this.refs.note.className += " is-invalid"
+        }else{
+            let obj = { nota: selNote };
+            api.post( `/notas/${this.state.book_id}`, obj)
+                .then(res=>{
+                    NotificationManager.success('Avaliação realizada!', 'Sucesso', 2000);
+                    this.setState({ 
+                        modal: !this.state.modal 
+                    });
+                }).catch(err=>{
+                    NotificationManager.error('Erro ao avaliar!', 'Erro', 2000);
+                    console.log(err);
+            });
+        }
+    }
+
     modal = () => { 
         return(
             <MDBModal isOpen={this.state.modal} toggle={this.eModal()}>
-                <MDBModalHeader toggle={this.eModal()}>Avalie</MDBModalHeader>
+                <MDBModalHeader toggle={this.eModal()}>Avaliar</MDBModalHeader>
                 <MDBModalBody>
-                    {`Livro: ${ this.state.book_title || '' }`}
+                    <strong>{`Livro: ${ this.state.book_title || '' }`}</strong>
                     <div className="mb-3"></div>
                     <MDBInputGroup
                         containerClassName="mb-3"
-                        prepend="Nota"
                         inputs={
-                            <select ref="note" className="browser-default custom-select">
+                            <select ref="note" defaultValue="" className="browser-default custom-select">
+                                <option value="" disabled>Dê uma nota ao livro</option>
                                 <option value="1">1</option>
                                 <option value="2">2</option>
                                 <option value="3">3</option>
@@ -94,27 +118,15 @@ export default class Index extends Component {
                     />
                 </MDBModalBody>
                 <MDBModalFooter>
-                    <MDBBtn color="secondary" onClick={this.eModal()}>Fechar</MDBBtn>
-                    <MDBBtn onClick={ this.addNote } color="primary">Avaliar</MDBBtn>
+                    <MDBBtn color="secondary" size="sm" onClick={ this.eModal() }>Fechar</MDBBtn>
+                    <MDBBtn color="primary" size="sm" onClick={ this.addNote } >Avaliar</MDBBtn>
                 </MDBModalFooter>
             </MDBModal>
         );
     } 
 
-    addNote = () =>{
-        const obj = { nota: this.refs.note.value };
-        api.post( `/notas/${this.state.book_id}`, obj)
-            .then(
-                this.setState({ 
-                    modal: !this.state.modal 
-                })
-            ).catch(err=>{
-                console.log(err);
-            });
-    }
-
     render() {
-      return (
+      return(
         <div>
             <MDBNavbar color="indigo" dark expand="md">
                 <MDBNavbarBrand>
@@ -149,7 +161,8 @@ export default class Index extends Component {
                 </MDBRow>
             </MDBContainer>
             { this.modal() }
+            <NotificationContainer/>
         </div>
-      );
+        );
     }
 }

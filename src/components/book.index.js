@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
 import api from '../services/api';
+import { Link } from 'react-router-dom';
+import {NotificationContainer, NotificationManager} from 'react-notifications';
+import 'react-notifications/lib/notifications.css';
+
 import { 
     MDBJumbotron, 
     MDBContainer, 
@@ -11,14 +14,22 @@ import {
     MDBTableBody, 
     MDBTableHead,
     MDBBtn,
-    MDBIcon
+    MDBIcon,
+    MDBModal, 
+    MDBModalBody, 
+    MDBModalHeader, 
+    MDBModalFooter
 }from "mdbreact";
 
 export default class Index extends Component {
 
     constructor(props) {
         super(props);
-        this.state = { book: [] };
+        this.state = { 
+            book: [],
+            modal: false ,
+            idBook: null
+        };
     }
     
     componentDidMount(){
@@ -35,17 +46,29 @@ export default class Index extends Component {
         });
     }
 
-    delete = (id) => {
-        let confirm = window.confirm('Confirmar?');
-        if(confirm){
-            api.delete(`/livros/${id}`)
-                .then(res=>{
-                    this.loadBooks();
-                })
-                .catch(err => console.log(err))
-        }
-    } 
+    toggle = id => () => {  
+        this.setState({
+            modal: !this.state.modal,
+            idBook: id
+        });
+    }
 
+    deleteBook = () => {
+        let id = this.state.idBook;
+        api.delete(`/livros/${id}`)
+            .then(res=>{
+                this.setState({
+                    modal: !this.state.modal,
+                    idBook: null
+                });
+                NotificationManager.success('Exclusão realizada!', 'Sucessso', 2000);
+                this.loadBooks();
+            })
+            .catch(err =>{
+                console.log(err)
+            });
+    }
+    
     listBooks = ()=>{
         return this.state.book.map((object, i)=>{
             return (
@@ -54,13 +77,13 @@ export default class Index extends Component {
                     <td>{ object.autor }</td>
                     <td>{ object.ano }</td>
                     <td>            
-                        <Link tag="a" className="nav-link Ripple-parent btn btn-outline-mdb-color btn-sm d-inline"  to={"/admin/editar/"+object._id}>
-                            edit <MDBIcon icon="edit" className="mr-1" />
+                        <Link className="btn btn-outline-mdb-color btn-sm d-inline" to={"/admin/editar/"+object._id}>
+                            <MDBIcon icon="edit" />
                         </Link>
                     </td>
                     <td>      
-                        <MDBBtn tag="a" outline size="sm" color="deep-orange" onClick={()=>{this.delete(object._id)}} >
-                            del <MDBIcon icon="trash-alt" className="mr-1" />
+                        <MDBBtn tag="a" outline size="sm" role="button" color="deep-orange" onClick={this.toggle(object._id)} >
+                            <MDBIcon icon="trash-alt" />
                         </MDBBtn>
                     </td>
                 </tr>
@@ -69,35 +92,48 @@ export default class Index extends Component {
     }
 
     render() {
-      return (
-        <MDBContainer className="mt-5 text-center">
-            <MDBRow>
-                <MDBCol>
-                    <h4 className="grey-text">
-                        <strong className="font-weight-bold">Lista de Livros</strong>
-                    </h4>
-                    <hr className="my-3" />
-                    <MDBJumbotron>
-                        <MDBCardBody>
-                            <MDBTable responsive small>
-                                <MDBTableHead>
-                                    <tr>
-                                        <th>Título</th>
-                                        <th>Autor</th>
-                                        <th>Ano</th>
-                                        <th>Editar</th>
-                                        <th>Deletar</th>
-                                    </tr>
-                                </MDBTableHead>
-                                <MDBTableBody>
-                                    { this.listBooks() }
-                                </MDBTableBody>
-                            </MDBTable>
-                        </MDBCardBody>
-                    </MDBJumbotron>
-                </MDBCol>
-            </MDBRow>
-        </MDBContainer>
+      return (        
+        <div>
+            <MDBContainer className="mt-5 text-center"> 
+                <MDBRow>
+                    <MDBCol>
+                        <h4 className="grey-text">
+                            <strong className="font-weight-bold">Lista de Livros</strong>
+                        </h4>
+                        <hr className="my-3" />
+                        <MDBJumbotron>
+                            <MDBCardBody>
+                                <MDBTable responsive small>
+                                    <MDBTableHead>
+                                        <tr>
+                                            <th>Título</th>
+                                            <th>Autor</th>
+                                            <th>Ano</th>
+                                            <th>Editar</th>
+                                            <th>Deletar</th>
+                                        </tr>
+                                    </MDBTableHead>
+                                    <MDBTableBody>
+                                        { this.listBooks() }
+                                    </MDBTableBody>
+                                </MDBTable>
+                            </MDBCardBody>
+                        </MDBJumbotron>
+                    </MDBCol>
+                </MDBRow>
+                <MDBModal isOpen={this.state.modal} toggle={this.toggle(null)} size="sm">
+                    <MDBModalHeader toggle={this.toggle(null)}>Deletar</MDBModalHeader>
+                    <MDBModalBody>
+                        Confirmar operação?
+                    </MDBModalBody>
+                    <MDBModalFooter>
+                        <MDBBtn color="secondary" size="sm" onClick={ this.toggle(null) }>Fechar</MDBBtn>
+                        <MDBBtn color="danger" size="sm" onClick={ this.deleteBook } >Deletar</MDBBtn>
+                    </MDBModalFooter>
+                </MDBModal>
+            </MDBContainer>
+            <NotificationContainer/>
+        </div>
       );
     }
 }

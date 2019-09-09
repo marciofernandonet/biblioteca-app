@@ -9,16 +9,13 @@
     "mdbreact": "4.19.1",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
+    "react-notifications": "^1.4.3",
     "react-router-dom": "^5.0.1",
     "react-scripts": "3.0.1"
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test --env=jsdom",
-    "eject": "react-scripts eject",
-    "rename": "renamer --find App-clear.js --replace App.js ./src/App-clear.js && renamer --find style.css --replace index.css ./src/style.css ",
-    "remove-demo": "rimraf ./src/assets ./src/components ./src/pages ./src/Routes.js ./src/App.js ./src/index.css && npm run rename"
+    "build": "react-scripts build"
   },
   "devDependencies": {
     "renamer": "^1.0.0",
