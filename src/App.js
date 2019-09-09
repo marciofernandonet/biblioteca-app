@@ -7,8 +7,8 @@ import NotFound from './components/utilities/NotFound';
 const App = () => (  
   <Router>
     <Switch>
-      <Route path='/admin' component={ MenuBar } />
       <Route exact path='/' component={ Notes } />
+      <Route path='/admin' component={ MenuBar } />
       <Route path="*" component={ NotFound } />
     </Switch>
   </Router>
