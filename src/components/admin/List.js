@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import api from '../services/api';
+import api from '../../services/api';
 import { Link } from 'react-router-dom';
 import {NotificationContainer, NotificationManager} from 'react-notifications';
 import 'react-notifications/lib/notifications.css';

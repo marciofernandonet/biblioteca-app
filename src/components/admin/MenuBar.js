@@ -10,13 +10,13 @@ import {
     MDBCollapse
 } from "mdbreact";
 
-import Create from './book.create';
-import Edit from './book.edit';
-import Index from './book.index';
-import BookAvg from './book.avg';
+import Index from './List';
+import Create from './Create';
+import Edit from './Edit';
+import Avg from './Avg';
 
-class MenuAdmin extends Component{
-
+class MenuBar extends Component
+{
     constructor(props) {
         super(props);
         this.state = {
@@ -38,27 +38,27 @@ class MenuAdmin extends Component{
                     <MDBNavbarToggler onClick={this.toggleCollapse} />
                     <MDBCollapse id="navbarCollapse3" isOpen={this.state.isOpen} navbar>
                         <MDBNavbarNav left>
-                            <MDBNavItem active >
+                            <MDBNavItem >
                                 <MDBNavLink to={'/admin'}>Home</MDBNavLink>
                             </MDBNavItem>
                             <MDBNavItem >
-                                <MDBNavLink to={'/admin/novo_livro'} >Novo</MDBNavLink>
+                                <MDBNavLink to={'/admin/novoLivro'} >Novo</MDBNavLink>
                             </MDBNavItem>
                             <MDBNavItem >
-                                <MDBNavLink to={'/admin/media_notas'} >Médias</MDBNavLink>
+                                <MDBNavLink to={'/admin/media'} >Médias</MDBNavLink>
                             </MDBNavItem>
                         </MDBNavbarNav>
                     </MDBCollapse>
                 </MDBNavbar>
                 <Switch>
-                    <Route path='/admin/novo_livro' component={ Create } />
-                    <Route path='/admin/editar/:id' component={ Edit } />
-                    <Route path='/admin/media_notas' component={ BookAvg } />
                     <Route exact path='/admin' component={ Index } />
+                    <Route path='/admin/novoLivro' component={ Create } />
+                    <Route path='/admin/editar/:id' component={ Edit } />
+                    <Route path='/admin/media' component={ Avg } />
                 </Switch>
             </Router>
         );
     }   
 }
 
-export default MenuAdmin;
+export default MenuBar;

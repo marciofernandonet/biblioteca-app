@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import api from '../services/api';
+import api from '../../services/api';
 import { 
     MDBJumbotron, 
     MDBContainer, 
@@ -62,8 +62,6 @@ export default class Index extends Component {
     }
 
     eModal = (id, title) => () => {
-        console.log(id);
-        console.log(title);
         this.setState({ 
             modal: !this.state.modal,
             book_id: id,
@@ -127,42 +125,42 @@ export default class Index extends Component {
 
     render() {
       return(
-        <div>
-            <MDBNavbar color="indigo" dark expand="md">
-                <MDBNavbarBrand>
-                    Avaliar Livros
-                </MDBNavbarBrand>
-            </MDBNavbar>
-            <MDBContainer className="mt-5 text-center">
-                <MDBRow>
-                    <MDBCol>
-                        <h4 className="grey-text">
-                            <strong className="font-weight-bold">Lista de Livros</strong>
-                        </h4>
-                        <hr className="my-3" />
-                        <MDBJumbotron>
-                            <MDBCardBody>
-                                <MDBTable responsive small>
-                                    <MDBTableHead>
-                                        <tr>
-                                            <th>Título</th>
-                                            <th>Autor</th>
-                                            <th>Ano</th>
-                                            <th>Avaliar</th>
-                                        </tr>
-                                    </MDBTableHead>
-                                    <MDBTableBody>
-                                        { this.listBooks() }
-                                    </MDBTableBody>
-                                </MDBTable>
-                            </MDBCardBody>
-                        </MDBJumbotron>
-                    </MDBCol>
-                </MDBRow>
-            </MDBContainer>
-            { this.modal() }
-            <NotificationContainer/>
-        </div>
+            <div>
+                <MDBNavbar color="indigo" dark expand="md">
+                    <MDBNavbarBrand>
+                        Avaliar Livros
+                    </MDBNavbarBrand>
+                </MDBNavbar>
+                <MDBContainer className="mt-5 text-center">
+                    <MDBRow>
+                        <MDBCol>
+                            <h4 className="grey-text">
+                                <strong className="font-weight-bold">Lista de Livros</strong>
+                            </h4>
+                            <hr className="my-3" />
+                            <MDBJumbotron>
+                                <MDBCardBody>
+                                    <MDBTable responsive small>
+                                        <MDBTableHead>
+                                            <tr>
+                                                <th>Título</th>
+                                                <th>Autor</th>
+                                                <th>Ano</th>
+                                                <th>Avaliar</th>
+                                            </tr>
+                                        </MDBTableHead>
+                                        <MDBTableBody>
+                                            { this.listBooks() }
+                                        </MDBTableBody>
+                                    </MDBTable>
+                                </MDBCardBody>
+                            </MDBJumbotron>
+                        </MDBCol>
+                    </MDBRow>
+                </MDBContainer>
+                { this.modal() }
+                <NotificationContainer/>
+            </div>
         );
     }
 }

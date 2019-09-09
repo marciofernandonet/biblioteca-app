@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import api from '../services/api';
+import api from '../../services/api';
 import { MDBRow, MDBCol, MDBBtn, MDBContainer, MDBCard, MDBCardBody } from "mdbreact";
 import { NotificationContainer, NotificationManager } from 'react-notifications';
 import 'react-notifications/lib/notifications.css';

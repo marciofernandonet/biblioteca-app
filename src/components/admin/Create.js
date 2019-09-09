@@ -1,5 +1,5 @@
 import React from "react";
-import api from '../services/api';
+import api from '../../services/api';
 import { MDBRow, MDBCol, MDBBtn, MDBContainer, MDBCard, MDBCardBody } from "mdbreact";
 import { NotificationContainer, NotificationManager } from 'react-notifications';
 import 'react-notifications/lib/notifications.css';
@@ -72,7 +72,7 @@ export default class BookCreate extends React.Component
                                             >
                                             <p className="h4 text-center py-3">Adicionar Livro</p>
                                             <MDBRow>
-                                                <MDBCol md="12" className="mb-">
+                                                <MDBCol md="12" className="mb-3">
                                                 <label
                                                     htmlFor="defaultFormRegisterTitle"
                                                     className="grey-text"
