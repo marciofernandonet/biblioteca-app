@@ -18,6 +18,10 @@ Uma biblioteca precisa de um sistema onde os usuários que alugam livros possam 
 Na pasta do projeto digite o seguinte comando para iniciar a aplicação `npm start`. 
 A aplicação roda sobre o seguinte endereço `http://localhost:3000/`.
 
+## Teste APP
+
+https://test-app-lib.herokuapp.com/#/
+
 ## Endereços
 
 ### Administração
