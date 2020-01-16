@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import { HashRouter as Router, Switch, Route, Link } from 'react-router-dom';
+import { BrowserRouter, Switch, Route, Link } from 'react-router-dom';
 import {
     MDBNavbar, 
     MDBNavbarBrand, 
@@ -30,7 +30,7 @@ class MenuBar extends Component
 
     render(){
         return(
-            <Router>
+            <BrowserRouter>
                 <MDBNavbar color="indigo" dark expand="md">
                     <MDBNavbarBrand>
                         <Link to={'/admin'} className="navbar-brand">Livraria</Link>
@@ -42,7 +42,7 @@ class MenuBar extends Component
                                 <MDBNavLink to={'/admin'}>Home</MDBNavLink>
                             </MDBNavItem>
                             <MDBNavItem >
-                                <MDBNavLink to={'/admin/novoLivro'} >Novo</MDBNavLink>
+                                <MDBNavLink to={'/admin/novoLivro'} >Adicionar</MDBNavLink>
                             </MDBNavItem>
                             <MDBNavItem >
                                 <MDBNavLink to={'/admin/media'} >Médias</MDBNavLink>
@@ -56,7 +56,7 @@ class MenuBar extends Component
                     <Route path='/admin/editar/:id' component={ Edit } />
                     <Route path='/admin/media' component={ Avg } />
                 </Switch>
-            </Router>
+            </BrowserRouter>
         );
     }   
 }
